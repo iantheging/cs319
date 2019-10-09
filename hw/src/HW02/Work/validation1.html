@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Validation Form</title>
+        <script src="./validation1.js"></script>
+        <style>.errorMessage{color: red;}</style>
+    </head>
+    <body>
+        <h1>Validation Form</h1>
+
+        <form id="validationForm" action=""> 
+            <fieldset>
+                <legend>Validation Form</legend>
+                <p id="FirstName">
+                    <label for="firstName">First name</label>
+                    <input id="firstName" name="firstName" required/>
+                </p>
+                <p id="LastName">
+                    <label for="lastName">Last name</label>
+                    <input id="lastName" name="lastName" required/>
+                </p>
+                <p id="Gender">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="select">--Select one--</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </p>
+                <p id="State">
+                    <label for="state">State</label>
+                    <select id="state" name="state" required>
+                        <option value="select">--Select one--</option>
+                        <option value="california">California</option>
+                        <option value="florida">Florida</option>
+                        <option value="newYork">New York</option>
+                        <option value="texas">Texas</option>
+                        <option value="hawaii">Hawaii</option>
+                        <option value="washington">Washington</option>
+                        <option value="colorado">Colorado</option>
+                        <option value="virginia">Virginia</option>
+                        <option value="iowa">Iowa</option>
+                        <option value="arizona">Arizona</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="button" id="submit" name="submit" value="Submit" onclick="validate1();" />
+                </p>
+            </fieldset>
+        </form>
+    </body>
+</html>

@@ -1,20 +1,24 @@
 <html>
     <head>
+        <script
+            type="text/javascript"
+	        src="https://code.jquery.com/jquery-3.4.1.js"
+			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+			crossorigin="anonymous"></script>
         <script src="./snake.js"></script>
         <title>Snake</title>
     </head>
     <body>
-        <div id="mySnake"></div>
-        <script>
-            document.getElementById("mySnake").innerHTML = Snake.run();
-        </script>
-        <!-- <div>
+        <div>
+            <h1>Snake</h1>
+        </div>
+        <div>
             <input id="stop" type="button" value="Stop" />
             <input id="left" type="button" value="Left" />
             <input id="right" type="button" value="Right" />
         </div>
         <div>
-            <canvas id="gameSpace" width="300" height="300" style="border:1px solid #000000;"></canvas>
-        </div> -->
+            <canvas id="canvas" width="300" height="300" style="border:1px solid #000000;"></canvas>
+        </div>
     </body>
 </html>

@@ -1,44 +1,146 @@
-var Snake = {
+$(document).ready(function() {
+    var gameSpace = document.getElementById("canvas");
+    var stopButton = document.getElementById("stop");
+    var leftButton = document.getElementById("left");
+    var rightButton = document.getElementById("right");
 
-    Model : {
-        oldVal : undefined
-    },
+    var dir = "Right";
+    var xPosition = 1;
+    var yPosition = 150;
+    var path = [];
+    var running = 0;
+    var game;
+    var gameOver = false;
 
-    View: {
-        stopButton : {id: "stop", type: "button", value: "Stop", onclick: ""},
-        leftButton : {id: "left", type: "button", value: "Left", onclick: ""},
-        rightButton : {id: "right", type: "button", value: "Right", onclick: ""},
-    },
+    var context = gameSpace.getContext("2d");
+    context.strokeStyle = "#ff0000";
+    context.lineWidth = 1;
 
-    Controller: {
+    document.addEventListener("keydown", function() {
 
-    },
+        if (running == 0 && !gameOver) {
+            running = 1;
+            context.beginPath();
+            path = [];
+            console.log("Trying to start game");
+            startGame();
+        }
 
-    run : function() {
-        console.log(Snake.displayAll());
-        return Snake.displayAll();
-    },
+        leftButton.onclick = function() {
+            console.log("Turning left");
+            switch (dir) {
+                case "Up":
+                    dir = "Left";
+                    break;
 
-    displayAll : function() {
-        var s;
-        s = "<div>";
-        s += Snake.displayElement(Snake.View.stopButton);
-        s += Snake.displayElement(Snake.View.leftButton);
-        s += Snake.displayElement(Snake.View.rightButton);
-        s += "</div><div>";
-        s += "<canvas id=\"gameSpace\" width=\"300\" height=\"300\" style=\"border:1px solid #000000;\"></canvas>";
-        s += "</div>";
-        return s;
-    },
+                case "Down":
+                    dir = "Right";
+                    break;
 
-    displayElement : function (element) {
-        var s = "<input ";
-        s += " id=\"" + element.id + "\"";
-        s += " type=\"" + element.type + "\"";
-        s += " value= \"" + element.value + "\"";
-        s += " onclick= \"" + element.onclick + "\"";
-        s += ">";
-        return s;
-    },
+                case "Right":
+                    dir = "Up";
+                    break;
 
-}
+                case "Left":
+                    dir = "Down";
+                    break;
+
+                default:
+                    dir = "Left";
+            }
+        }
+
+        rightButton.onclick = function() {
+            console.log("Turning right");
+            switch (dir) {
+                case "Up":
+                    dir = "Right";
+                    break;
+
+                case "Down":
+                    dir = "Left";
+                    break;
+
+                case "Right":
+                    dir = "Down";
+                    break;
+
+                case "Left":
+                    dir = "Up";
+                    break;
+
+                default:
+                    dir = "Right";
+            }
+        }
+
+        stopButton.onclick = function() {
+            if (running == 1) {
+                console.log("Stopping game");
+                clearInterval(game);
+                running = 0;
+                stopButton.innerText = "Start";
+            } else {
+                console.log("Resuming game");
+                stopButton.innerText = "Stop";
+                running = 1;
+                startGame()
+            }
+        }
+
+    });
+
+    function startGame() {
+        console.log("Game started");
+        game = setInterval(move, 25);
+    }
+
+    function move() {
+        context.moveTo(xPosition, yPosition);
+        // move the snake depending on what direction its going
+        switch (dir) {
+            case "Up":
+                yPosition--;
+                break;
+
+            case "Down":
+                yPosition++;
+                break;
+
+            case "Right":
+                xPosition++;
+                break;
+
+            case "Left":
+                xPosition--;
+                break;
+
+            default:
+                xPosition++;
+        }
+
+        console.log("Moved " + dir);
+
+        // check that snake has not touched a wall
+        if (xPosition > 300 || xPosition < 0 || yPosition > 300 || yPosition < 0) {
+            console.log("Hit wall");
+            clearInterval(game);
+            running = 0;
+            gameOver = true;
+        }
+
+        // check that snake has not touched itself
+        for (var i = 0; i < path.length; i++) {
+            if (xPosition == path[i].x && yPosition == path[i].y) {
+                console.log("Hit myself");
+                clearInterval(game);
+                running = 0;
+                gameOver = true;
+            }
+        }
+
+        context.lineTo(xPosition, yPosition);
+        context.stroke();
+        path.push({x: xPosition, y: yPosition});
+    }
+});

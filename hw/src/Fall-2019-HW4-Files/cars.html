@@ -1,0 +1,53 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Homework 4</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+  <script src="./cars.js"></script>
+</head>
+
+<body>
+  
+  <!-- #TODO Table goes here -->
+  <div ng-app="carApp" ng-controller="carCtrl">
+    <table>
+      <thead>
+        <tr>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th ng-click="order = 'year'; reverse = !reverse">Year</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Option</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="car in cars | orderBy:order:reverse">
+          <td>{{ car.manufacturer }}</td>
+          <td>{{ car.model }}</td>
+          <td>{{ car.year }}</td>
+          <td>{{ car.stock }}</td>
+          <td>{{ car.price | currency }}</td>
+          <td>
+            <button ng-click="car.stock = car.stock + 1">Increment</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <select ng-model="selectedCompany" ng-options="comp for comp in companies"></select>
+  </div>
+
+  <script>
+    var app = angular.module('carApp', []);
+    app.controller('carCtrl', function($scope) {
+      $scope.cars = cars;
+      $scope.order = null;
+      $scope.reverse = true;
+      $scope.companies = ["All", "Ford", "Toyota", "Hyundai", "Chevy", "BMW", "Dodge", "Honda"]
+//ng-options = car.manufacturer for car in cars | 
+    });
+  </script>
+</body>
+</html>
